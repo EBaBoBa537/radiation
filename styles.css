@@ -1,6 +1,6 @@
 body {
     margin: 0px;
-    font-family: 'nunito';
+    font-family: "Nunito", sans-serif;
     overflow: hidden;
     background-color: rgb(200, 219, 173);
     --white-color: rgba(255, 255, 255);
