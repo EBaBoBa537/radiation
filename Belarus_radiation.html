@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Радиация в лесах Беларуси</title>
+    <meta charset="UTF-8">
+    <link rel=stylesheet type=text/css href='styles.css'>
+    <link rel="shortcut icon" href="materials/images/mushroom.png"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+</head>
+<body>
+
+    <div id="name" class="whiteblock abs shd">
+        <img src="materials/images/mushroom.png">
+        <p>Радиационная обстановка в лесах Беларуси</p>
+    </div>
+
+    <div id="copyright" class="whiteblock abs shd"> <p>© Сделано в 2024 в любительских целях</p> </div>
+    <div id="over_controlpanel" class="abs" style="width: 273px;">
+        <div class="under_controlpanel shd" id="under_controlpanel_radiation">
+            <div class="name_of_2">Карта радиации за:</div>
+            <div class="over_things">
+                <div class="radiation_radio not_last_2">
+                    <input id="radio-5" type="radio" name="radio_2" value="5" checked>
+                    <label for="radio-5">2006 г.</label>
+                </div>  
+                <div class="radiation_radio">
+                    <input id="radio-6" type="radio" name="radio_2" value="6">
+                    <label for="radio-6">2046 г.</label>
+                </div>
+            </div>
+        </div>
+
+        <div id="controlpanel" class="shd">
+            <div id="part_1_b" class="part">
+                <div class="name_of_part" style="margin-bottom: 3px;">Прозрачность:</div>
+                <input type="range" min="0" max="1" step="0.01" value="0.6" id="opacity_range">
+            </div>
+            
+            <div id="part_2" class="part">
+                <div class="name_of_part" style="margin-bottom: 6px;">Подложка карты:</div>
+                <div class="over_things">
+                    <div class="podlozhka_radio not_last">
+                        <input id="radio-7" type="radio" name="radio_3" value="7" checked>
+                        <label for="radio-7">Схема</label>
+                    </div>  
+                    <div class="podlozhka_radio">
+                        <input id="radio-8" type="radio" name="radio_3" value="8">
+                        <label for="radio-8">Спутник</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="map_controlpanel" class="abs">
+        <div id="over_search" class="shd">
+            <div id="search">
+                <input type="text" id="search_text" autocomplete="off"  placeholder="Поиск ...">
+                <button type="button" id="button_search" class="whiteblock square_button_1"></button>   
+            </div>
+        </div>
+        <button type="button" id="button_return" class="whiteblock square_button_1 shd" style="margin-bottom: 12px;"></button>  
+        <div id="scale_buttons">
+            <button type="button" id="button_more_scale" class="whiteblock square_button_2 shd"></button> 
+            <div id="over_scale_range">
+                <input type="range" id="scale_range" min="0" max="19" step="1"/> 
+            </div>
+            <button type="button" id="button_less_scale" class="whiteblock square_button_2 shd"></button>  
+        </div>
+    </div>
+
+
+    <div id="over_maschtab" class="abs">
+        <div id="maschtab">
+            <hr> <span id="maschtab_text">5 км</span> <hr>
+        </div>    
+    </div>
+    
+
+
+    <div id="legend_radiation" class="whiteblock legend abs shd">
+        <div class="in_legend_name">Радиация, кюри/км²</div>
+        <div class="in_legend">
+            <div class="square" style="background-color: #BA0E6C;"></div> <p>&#62; 40 <b style="color:#ff7d7d; font-weight: normal;">⚠</b></p>
+        </div>
+        <div class="in_legend">
+            <div class="square" style="background-color: #D33460;"></div> <p>15 - 40 <b style="color:#ff7d7d; font-weight: normal;">⚠</b></p>
+        </div>
+        <div class="in_legend">
+            <div class="square" style="background-color: #ED517A;"></div> <p>5 - 15 <b style="color:#ff7d7d; font-weight: normal;">⚠</b></p>
+        </div>
+        <div class="in_legend">
+            <div class="square" style="background-color: #E77FA0;"></div> <p>1 - 5 <b style="color:#ff7d7d; font-weight: normal;">⚠</b></p>
+        </div>
+        <div class="in_legend">
+            <div class="square" style="background-color: #F7B39B;"></div> <p>0.5 - 1</p>
+        </div>
+        <div class="in_legend">
+            <div class="square" style="background-color: #F9D4A7;"></div> <p>0.2 - 0.5</p>
+        </div>
+        <div class="in_legend">
+            <div class="square" style="background-color: #FCF8B9;"></div> <p>0.1 - 0.2</p>
+        </div>
+        <div class="in_legend last">
+            <div class="square" style="background-color: #ffffff;"></div> <p>&#60; 0.1</p>
+        </div>
+    </div>
+
+
+
+    <div id="under_copyright" class="abs"></div>
+    <div id="dop_copyright" class="abs"><a href="https://chernobyl.mchs.gov.by/informatsionnyy-tsentr/atlas-sovremennykh-i-prognoznykh-posledstviy-katastrofy-na-chaes/">Атлас последствий аварии на ЧАЭС</a> |</div>
+
+    <div id="map"></div>
+
+
+<script src="javascript.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+</body>
+</html>
